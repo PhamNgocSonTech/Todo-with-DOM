@@ -26,6 +26,9 @@ function handleTaskAction(e) {
 
   if (e.target.closest(".edit")) {
     const newTitle = prompt("Enter new title", task.title);
+    // if (!newTitle) {
+    //   return alert("Empty Title");
+    // }
     task.title = newTitle;
     renderTask();
   } else if (e.target.closest(".done")) {
@@ -56,6 +59,10 @@ function addTask(e) {
 }
 
 function renderTask() {
+  if (!tasks.length) {
+    taskList.innerHTML = '<li class="empty-message">No tasks available</li>';
+    return;
+  }
   const html = tasks
     .map(
       (task, index) => `
