@@ -1,18 +1,16 @@
 const tasks = [
-  {
-    title: "Design web",
-    completed: true,
-  },
-
-  {
-    title: "Code web",
-    completed: false,
-  },
-
-  {
-    title: "Tester web",
-    completed: true,
-  },
+  // {
+  //   title: "Design web",
+  //   completed: true,
+  // },
+  // {
+  //   title: "Code web",
+  //   completed: false,
+  // },
+  // {
+  //   title: "Tester web",
+  //   completed: true,
+  // },
 ];
 
 const taskList = document.querySelector("#task-list");
@@ -25,15 +23,22 @@ function handleTaskAction(e) {
   const task = tasks[taskIndex];
 
   if (e.target.closest(".edit")) {
-    const newTitle = prompt("Enter new title", task.title);
-    // if (!newTitle) {
-    //   return alert("Empty Title");
-    // }
+    let newTitle = prompt("Enter new title", task.title);
+    if (newTitle === null) return;
+
+    newTitle = newTitle.trim();
+    if (!newTitle) {
+      alert("Task title can not be empty");
+      return;
+    }
+
     task.title = newTitle;
     renderTask();
+    return;
   } else if (e.target.closest(".done")) {
     task.completed = !task.completed;
     renderTask();
+    return;
   } else if (e.target.closest(".delete")) {
     if (confirm(`Are you sure delete ${task.title}?`)) {
       tasks.splice(taskIndex, 1);
