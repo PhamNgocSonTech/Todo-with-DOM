@@ -32,6 +32,15 @@ function handleTaskAction(e) {
       return;
     }
 
+    const isDuplicate = tasks.some(
+      (task) =>
+        task.title.toLowerCase() === newTitle.toLowerCase() &&
+        taskIndex !== index
+    );
+    if (isDuplicate) {
+      return alert("Title already exists");
+    }
+
     task.title = newTitle;
     renderTask();
     return;
@@ -52,6 +61,13 @@ function addTask(e) {
 
   const value = todoInput.value.trim();
   if (!value) return alert("Please input something");
+
+  const isDuplicate = tasks.some(
+    (task) => task.title.toLowerCase() === value.toLowerCase()
+  );
+  if (isDuplicate) {
+    return alert("Title already exists");
+  }
 
   tasks.push({
     title: value,
