@@ -18,6 +18,13 @@ const taskList = document.querySelector("#task-list");
 const todoForm = document.querySelector("#todo-form");
 const todoInput = document.querySelector("#todo-input");
 
+function escapeHTML(html) {
+  const div = document.createElement("div");
+  div.innerText = html;
+
+  return div.innerHTML;
+}
+
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
@@ -109,7 +116,7 @@ function renderTask() {
      <li class="task-item ${
        task.completed ? "completed" : ""
      }"data-index="${index}">
-                <span class="task-title">${task.title}</span>
+                <span class="task-title">${escapeHTML(task.title)}</span>
                 <div class="task-action">
                     <button class="task-btn edit">Edit</button>
                     <button class="task-btn done">${
