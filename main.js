@@ -33,7 +33,9 @@ function isDuplicateTask(newTitle, excludeIndex = -1) {
 }
 function handleTaskAction(e) {
   const taskItem = e.target.closest(".task-item");
-  const taskIndex = +taskItem.getAttribute("task-index");
+  if (!taskItem) return;
+  // const taskIndex = +taskItem.getAttribute("data-index");
+  const taskIndex = +taskItem.dataset.index;
   const task = tasks[taskIndex];
 
   if (e.target.closest(".edit")) {
@@ -106,7 +108,7 @@ function renderTask() {
       (task, index) => `
      <li class="task-item ${
        task.completed ? "completed" : ""
-     }" task-index="${index}">
+     }"data-index="${index}">
                 <span class="task-title">${task.title}</span>
                 <div class="task-action">
                     <button class="task-btn edit">Edit</button>
