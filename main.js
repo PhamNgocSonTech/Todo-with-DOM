@@ -1,21 +1,26 @@
-const tasks = [
-  // {
-  //   title: "Design web",
-  //   completed: true,
-  // },
-  // {
-  //   title: "Code web",
-  //   completed: false,
-  // },
-  // {
-  //   title: "Tester web",
-  //   completed: true,
-  // },
-];
+// const tasks = [
+//   // {
+//   //   title: "Design web",
+//   //   completed: true,
+//   // },
+//   // {
+//   //   title: "Code web",
+//   //   completed: false,
+//   // },
+//   // {
+//   //   title: "Tester web",
+//   //   completed: true,
+//   // },
+// ];
 
+const tasks = JSON.parse(localStorage.getItem("tasks")) ?? [];
 const taskList = document.querySelector("#task-list");
 const todoForm = document.querySelector("#todo-form");
 const todoInput = document.querySelector("#todo-input");
+
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 function isDuplicateTask(newTitle, excludeIndex = -1) {
   const isDuplicate = tasks.some(
@@ -52,15 +57,18 @@ function handleTaskAction(e) {
 
     task.title = newTitle;
     renderTask();
+    saveTasks();
     return;
   } else if (e.target.closest(".done")) {
     task.completed = !task.completed;
     renderTask();
+    saveTasks();
     return;
   } else if (e.target.closest(".delete")) {
     if (confirm(`Are you sure delete ${task.title}?`)) {
       tasks.splice(taskIndex, 1);
       renderTask();
+      saveTasks();
     }
   }
 }
@@ -84,7 +92,7 @@ function addTask(e) {
   });
 
   renderTask();
-
+  saveTasks();
   todoInput.value = "";
 }
 
